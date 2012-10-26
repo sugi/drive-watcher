@@ -27,6 +27,8 @@ gem 'omniauth', '~> 1.0.0'
 gem 'omniauth-google-oauth2'
 gem 'exception_notification', :group => :production, :require => 'exception_notifier'
 
+gem 'rspec-rails', :group => [:test, :development]
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
