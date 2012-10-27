@@ -1,0 +1,65 @@
+<%= form_for(@user) do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :account %><br />
+    <%= f.text_field :account %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :notify_email %><br />
+    <%= f.text_field :notify_email %>
+  </div>
+  <div class="field">
+    <%= f.label :refresh_token %><br />
+    <%= f.text_field :refresh_token %>
+  </div>
+  <div class="field">
+    <%= f.label :auth_token %><br />
+    <%= f.text_field :auth_token %>
+  </div>
+  <div class="field">
+    <%= f.label :token_issued_at %><br />
+    <%= f.datetime_select :token_issued_at %>
+  </div>
+  <div class="field">
+    <%= f.label :token_expired_at %><br />
+    <%= f.datetime_select :token_expired_at %>
+  </div>
+  <div class="field">
+    <%= f.label :error_count %><br />
+    <%= f.number_field :error_count %>
+  </div>
+  <div class="field">
+    <%= f.label :suspended %><br />
+    <%= f.check_box :suspended %>
+  </div>
+  <div class="field">
+    <%= f.label :last_checked_at %><br />
+    <%= f.datetime_select :last_checked_at %>
+  </div>
+  <div class="field">
+    <%= f.label :last_notified_at %><br />
+    <%= f.datetime_select :last_notified_at %>
+  </div>
+  <div class="field">
+    <%= f.label :check_target %><br />
+    <%= f.text_field :check_target %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

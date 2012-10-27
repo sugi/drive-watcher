@@ -1,0 +1,65 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Account:</b>
+  <%= @user.account %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @user.name %>
+</p>
+
+<p>
+  <b>Notify email:</b>
+  <%= @user.notify_email %>
+</p>
+
+<p>
+  <b>Refresh token:</b>
+  <%= @user.refresh_token %>
+</p>
+
+<p>
+  <b>Auth token:</b>
+  <%= @user.auth_token %>
+</p>
+
+<p>
+  <b>Token issued at:</b>
+  <%= @user.token_issued_at %>
+</p>
+
+<p>
+  <b>Token expired at:</b>
+  <%= @user.token_expired_at %>
+</p>
+
+<p>
+  <b>Error count:</b>
+  <%= @user.error_count %>
+</p>
+
+<p>
+  <b>Suspended:</b>
+  <%= @user.suspended %>
+</p>
+
+<p>
+  <b>Last checked at:</b>
+  <%= @user.last_checked_at %>
+</p>
+
+<p>
+  <b>Last notified at:</b>
+  <%= @user.last_notified_at %>
+</p>
+
+<p>
+  <b>Check target:</b>
+  <%= @user.check_target %>
+</p>
+
+
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', users_path %>
