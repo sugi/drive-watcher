@@ -1,6 +1,8 @@
 DriveWatcher::Application.routes.draw do
   resources :users
 
+  match "/auth/:provider/callback" => "users#auth_callback"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
