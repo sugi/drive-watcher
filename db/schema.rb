@@ -11,23 +11,23 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121028074713) do
+ActiveRecord::Schema.define(:version => 20121028162708) do
 
   create_table "users", :force => true do |t|
-    t.string   "account",                             :null => false
+    t.string   "account",                                 :null => false
     t.string   "name"
     t.string   "notify_email"
     t.string   "refresh_token"
     t.string   "auth_token"
     t.datetime "token_issued_at"
     t.datetime "token_expires_at"
-    t.integer  "error_count",      :default => 0,     :null => false
-    t.boolean  "suspended",        :default => false, :null => false
+    t.integer  "error_count",      :default => 0,         :null => false
+    t.boolean  "suspended",        :default => false,     :null => false
     t.datetime "last_checked_at"
     t.datetime "last_notified_at"
-    t.string   "check_target",     :default => "all", :null => false
-    t.datetime "created_at",                          :null => false
-    t.datetime "updated_at",                          :null => false
+    t.string   "check_target",     :default => "default", :null => false
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
   end
 
   add_index "users", ["account"], :name => "index_users_on_account", :unique => true
