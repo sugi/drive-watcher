@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121027211834) do
+ActiveRecord::Schema.define(:version => 20121028074713) do
 
   create_table "users", :force => true do |t|
     t.string   "account",                             :null => false
@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(:version => 20121027211834) do
     t.string   "refresh_token"
     t.string   "auth_token"
     t.datetime "token_issued_at"
-    t.datetime "token_expired_at"
+    t.datetime "token_expires_at"
     t.integer  "error_count",      :default => 0,     :null => false
     t.boolean  "suspended",        :default => false, :null => false
     t.datetime "last_checked_at"
@@ -29,5 +29,7 @@ ActiveRecord::Schema.define(:version => 20121027211834) do
     t.datetime "created_at",                          :null => false
     t.datetime "updated_at",                          :null => false
   end
+
+  add_index "users", ["account"], :name => "index_users_on_account", :unique => true
 
 end
