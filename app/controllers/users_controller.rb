@@ -47,8 +47,9 @@ class UsersController < ApplicationController
       :refresh_token    => c.refresh_token,
       :token_expires_at => Time.at(c.expires_at).to_datetime,
       :token_issued_at  => DateTime.now,
+      :notify_email     => @auth["info"]["email"],
     }
-    user.save
+    user.save!
     redirect_to(user)
   end
 end
