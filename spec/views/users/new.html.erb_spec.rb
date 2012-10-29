@@ -10,7 +10,7 @@ describe "users/new" do
       :auth_token => "MyString",
       :error_count => 1,
       :suspended => false,
-      :check_target => "MyString"
+      :check_target => "all"
     ).as_new_record)
   end
 
@@ -26,7 +26,7 @@ describe "users/new" do
       assert_select "input#user_auth_token", :name => "user[auth_token]"
       assert_select "input#user_error_count", :name => "user[error_count]"
       assert_select "input#user_suspended", :name => "user[suspended]"
-      assert_select "input#user_check_target", :name => "user[check_target]"
+      assert_select "select#user_check_target", :name => "user[check_target]"
     end
   end
 end

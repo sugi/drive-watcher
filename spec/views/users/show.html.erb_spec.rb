@@ -10,7 +10,7 @@ describe "users/show" do
       :auth_token => "Auth Token",
       :error_count => 1,
       :suspended => false,
-      :check_target => "Check Target"
+      :check_target => "default"
     ))
   end
 
@@ -24,6 +24,6 @@ describe "users/show" do
     rendered.should match(/Auth Token/)
     rendered.should match(/1/)
     rendered.should match(/false/)
-    rendered.should match(/Check Target/)
+    rendered.should match(/default/)
   end
 end

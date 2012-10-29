@@ -26,6 +26,8 @@ gem 'google-api-client', :require => 'google/api_client'
 gem 'omniauth', '~> 1.0.0'
 gem 'omniauth-google-oauth2'
 gem 'exception_notification', :group => :production, :require => 'exception_notifier'
+#gem 'enumerated_attribute', :git => '/home/sugi/works/git/github/enumerated_attribute'
+gem 'enumerated_attribute'
 
 group :development, :test do
   gem 'rspec-rails'

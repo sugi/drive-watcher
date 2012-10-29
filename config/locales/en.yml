@@ -2,4 +2,14 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
+  activerecord:
+    attributes:
+      user:
+        check_target:
+  enumerated_attribute:
+    user:
+      check_target:
+        default: Listed in "Actitity"
+        all: All
+        own: Own by me
+        starred: Starred

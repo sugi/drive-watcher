@@ -11,6 +11,13 @@ class User < ActiveRecord::Base
     :last_checked_at, :last_notified_at, :name, :notify_email,
     :refresh_token, :suspended, :token_expires_at, :token_issued_at
 
+  check_target_enums = %w(default all own starred)
+  enum_attr :check_target, check_target_enums do
+    check_target_enums.each do |choice|
+      label choice.to_sym => I18n.t(choice, :scope => [:enumerated_attribute, :user, :check_target])
+    end
+  end
+
   BACKWARD_LIMIT = 7.days
 
   def type_serach_query
@@ -20,7 +27,7 @@ class User < ActiveRecord::Base
     when "starred"
       "starred = true"
     when "own"
-      "#{account} in owners"
+      "'#{account}' in owners"
     else # "default"
       "hidden = false"
     end

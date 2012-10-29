@@ -11,7 +11,7 @@ describe "users/index" do
         :auth_token => "Auth Token",
         :error_count => 1,
         :suspended => false,
-        :check_target => "Check Target"
+        :check_target => "default"
       ),
       stub_model(User,
         :account => "Account",
@@ -21,7 +21,7 @@ describe "users/index" do
         :auth_token => "Auth Token",
         :error_count => 1,
         :suspended => false,
-        :check_target => "Check Target"
+        :check_target => "default"
       )
     ])
   end
@@ -36,6 +36,6 @@ describe "users/index" do
     assert_select "tr>td", :text => "Auth Token".to_s, :count => 2
     assert_select "tr>td", :text => 1.to_s, :count => 2
     assert_select "tr>td", :text => false.to_s, :count => 2
-    assert_select "tr>td", :text => "Check Target".to_s, :count => 2
+    assert_select "tr>td", :text => "default".to_s, :count => 2
   end
 end
