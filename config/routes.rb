@@ -1,7 +1,13 @@
 DriveWatcher::Application.routes.draw do
-  resources :users
+  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+  devise_scope :user do
+    get 'sign_in',  :to => 'devise/sessions#new',     :as => :new_user_session  # TODO: fix
+    get 'sign_out', :to => 'devise/sessions#destroy', :as => :destroy_user_session
+  end
 
-  match "/auth/:provider/callback" => "users#auth_callback"
+  mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
+
+  resources :users
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

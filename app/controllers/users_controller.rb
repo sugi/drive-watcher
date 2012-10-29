@@ -36,20 +36,4 @@ class UsersController < ApplicationController
     respond_with(@user)
   end
 
-  def auth_callback
-    @auth = request.env["omniauth.auth"]
-    user = User.find_by_account(@auth.uid) || User.new(:account => @auth.uid)
-
-    c = @auth["credentials"]
-    $stderr.puts @auth.inspect
-    user.attributes = {
-      :auth_token       => c.token,
-      :refresh_token    => c.refresh_token,
-      :token_expires_at => Time.at(c.expires_at).to_datetime,
-      :token_issued_at  => DateTime.now,
-      :notify_email     => @auth["info"]["email"],
-    }
-    user.save!
-    redirect_to(user)
-  end
 end

@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
     attr_accessor :api_result
   end
 
+  devise :omniauthable
+
   attr_accessible :account, :auth_token, :check_target, :error_count,
     :last_checked_at, :last_notified_at, :name, :notify_email,
     :refresh_token, :suspended, :token_expires_at, :token_issued_at
@@ -19,6 +21,33 @@ class User < ActiveRecord::Base
   end
 
   BACKWARD_LIMIT = 7.days
+
+  class << self
+    def find_for_google_oauth2(auth, signed_in_resource=nil)
+      !auth || !auth.uid and return nil
+      u = find_by_account(auth.uid) || new(:account => auth.uid)
+
+      c = auth["credentials"]
+      u.update_attributes!({
+        :auth_token       => c.token,
+        :refresh_token    => c.refresh_token,
+        :token_expires_at => Time.at(c.expires_at).to_datetime,
+        :token_issued_at  => DateTime.now,
+        :notify_email     => auth["info"]["email"],
+      })
+      u.save!
+      u
+    end
+  end
+
+  def uid;     account;     end
+  def uid=(v); account = v; end
+  def email;     notify_email;     end
+  def email=(v); notify_email = v; end
+
+  def provider
+    :google_oauth2
+  end
 
   def admin?
     Rails.configuration.admin_users.member? self.account
@@ -93,10 +122,10 @@ class User < ActiveRecord::Base
     auth.client_secret = Rails.configuration.google_client_secret
     
     auth.update_token!({
-                         :access_token => auth_token,
+                         :access_token  => auth_token,
                          :refresh_token => refresh_token,
-                         :expires_in => token_expires_at.to_i - token_issued_at.to_i - 30, # -30 sec for early refresh...
-                         :issued_at => token_issued_at,
+                         :expires_in    => token_expires_at.to_i - token_issued_at.to_i - 30, # -30 sec for early refresh...
+                         :issued_at     => token_issued_at,
                        })
     @gapi_client = gac
     update_gapi_client_token
@@ -107,7 +136,7 @@ class User < ActiveRecord::Base
     client = gapi_client
     service = client.discovered_api('drive', 'v2')
     greq = {
-      :headers => {'Content-Type' => 'application/json'},
+      :headers    => {'Content-Type' => 'application/json'},
       :api_method => service.files.__send__(method),
       :parameters => {}.merge(params),
     }
