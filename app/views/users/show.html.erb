@@ -1,65 +1,54 @@
-<p id="notice"><%= notice %></p>
+<ul class="nav nav-tabs">
+<li class="active"><a href="#settings" data-toggle="tab">Settings</a></li>
+<li><a href="#info" data-toggle="tab">Info</a></li>
+<li><a href="#manage" data-toggle="tab">Manage</a></li>
+</ul>
 
-<p>
-  <b>Account:</b>
-  <%= @user.account %>
+<div class="tab-content" id="main-ui">
+<div class="tab-pane active" id="settings">
+
+<%= form_for(@user) do |f| %>
+
+<h3><%= User.human_attribute_name :check_target %></h3>
+<% @user.enums(:check_target).hash.each do |k, l| %>
+<label>
+<%= f.radio_button :check_target, k %>
+<strong><%= l %></strong><br>
+</label>
+<% end %>
+
+<h3><%= User.human_attribute_name :check_interval %></h3>
+<%= f.select :check_interval, options_for_select(Hash[*[2, 4, 6, 12, 24].map{|i| ["#{i} Hours", i]}.flatten]) %>
+
+
+<%= f.submit :class => 'btn btn-primary btn-large' %>
+<% end %>
+</div>
+
+
+<div class="tab-pane" id="info">
+
+<table>
+<tr>
+  <th><%= User.human_attribute_name :notify_email %></th>
+  <td><%= @user.email %></td>
+</tr>
+<tr>
+  <th><%= User.human_attribute_name :last_checked_at %></th>
+  <td><%= @user.last_notified_at ? l(@user.last_notified_at) : '(None)' %></td>
+</tr>
+</table>
+</div>
+
+<div class="tab-pane" id="manage">
+<p class="well">
+<%= link_to 'Reset check timestamp', user_path(@user), :class => 'btn', :method => :post, :data => {:confirm => 'Are your sure reset timestamp?'} %>
+  By resetting timestamp, you will get a notification for all unread files modified within a week.
 </p>
-
-<p>
-  <b>Name:</b>
-  <%= @user.name %>
+<p class="well">
+<%= link_to 'Delete your account', user_path(@user), :class => 'btn btn-danger', :method => :delete, :data => {:confirm => 'Are your sure to delete your account on Google Drive Notifier?'} %>
+  You can delete information of your account on Google Drive Notifier. All settings will lost.
 </p>
+</div>
 
-<p>
-  <b>Notify email:</b>
-  <%= @user.notify_email %>
-</p>
-
-<p>
-  <b>Refresh token:</b>
-  <%= @user.refresh_token %>
-</p>
-
-<p>
-  <b>Auth token:</b>
-  <%= @user.auth_token %>
-</p>
-
-<p>
-  <b>Token issued at:</b>
-  <%= @user.token_issued_at %>
-</p>
-
-<p>
-  <b>Token expires at:</b>
-  <%= @user.token_expires_at %>
-</p>
-
-<p>
-  <b>Error count:</b>
-  <%= @user.error_count %>
-</p>
-
-<p>
-  <b>Suspended:</b>
-  <%= @user.suspended %>
-</p>
-
-<p>
-  <b>Last checked at:</b>
-  <%= @user.last_checked_at %>
-</p>
-
-<p>
-  <b>Last notified at:</b>
-  <%= @user.last_notified_at %>
-</p>
-
-<p>
-  <b>Check target:</b>
-  <%= @user.check_target %>
-</p>
-
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+</div>
