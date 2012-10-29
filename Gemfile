@@ -27,6 +27,7 @@ gem 'exception_notification', :group => :production, :require => 'exception_noti
 #gem 'enumerated_attribute', :git => '/home/sugi/works/git/github/enumerated_attribute'
 gem 'enumerated_attribute'
 gem 'devise'
+gem 'devise-i18n'
 gem 'rails_admin'
 
 group :development, :test do
