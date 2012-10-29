@@ -1,48 +1,12 @@
 body {
-  background-color: #fff;
-  color: #333;
   font-family: verdana, arial, helvetica, sans-serif;
-  font-size: 13px;
-  line-height: 18px;
-}
-
-p, ol, ul, td {
-  font-family: verdana, arial, helvetica, sans-serif;
-  font-size: 13px;
-  line-height: 18px;
-}
-
-pre {
-  background-color: #eee;
-  padding: 10px;
-  font-size: 11px;
-}
-
-a {
-  color: #000;
-  &:visited {
-    color: #666;
-  }
-  &:hover {
-    color: #fff;
-    background-color: #000;
-  }
-}
-
-div {
-  &.field, &.actions {
-    margin-bottom: 10px;
-  }
-}
-
-#notice {
-  color: green;
+  font-size: 86%;
 }
 
 .field_with_errors {
   padding: 2px;
   background-color: red;
-  display: table;
+  display: inline-block;
 }
 
 #error_explanation {
@@ -66,4 +30,20 @@ div {
     font-size: 12px;
     list-style: square;
   }
+}
+
+#main-navi .nav { float: right; }
+#main-navi .brand:hover { background-color: inherit; }
+#main-content { margin-top: 1em; }
+footer {
+  margin-top: 6em;
+  border-top: 1px solid #ccc;
+  color: #aaa;
+  text-align: center;
+}
+
+.welcome-signin {
+  margin-top: 4em;
+  text-align: center;
+  a.btn { min-width: 16em; }
 }
