@@ -11,3 +11,8 @@
  *= require_self
  *= require_tree .
  */
+
+#main-navi .nav { float: right; }
+#main-navi .brand:hover { background-color: inherit; }
+#main-content { margin-top: 1em; }
+footer { margin-top: 8em; border-top: 1px solid #ccc; color: #aaa; text-align: center; }
