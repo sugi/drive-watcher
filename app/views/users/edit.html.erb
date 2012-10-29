@@ -1,6 +1,50 @@
-<h1>Editing user</h1>
+<ul class="nav nav-tabs">
+<li class="active"><a href="#settings" data-toggle="tab">Settings</a></li>
+<li><a href="#info" data-toggle="tab">Info</a></li>
+<li><a href="#manage" data-toggle="tab">Manage</a></li>
+</ul>
 
-<%= render 'form' %>
+<div class="tab-content" id="main-ui">
+<div class="tab-pane active" id="settings">
 
-<%= link_to 'Show', @user %> |
-<%= link_to 'Back', users_path %>
+<%= form_for(@user) do |f| %>
+
+<h3><%= User.human_attribute_name :check_target %></h3>
+<% @user.enums(:check_target).hash.each do |k, l| %>
+<label>
+<%= f.radio_button :check_target, k %>
+<strong><%= l %></strong><br>
+</label>
+<% end %>
+
+<%= f.submit :class => 'btn btn-primary btn-large' %>
+<% end %>
+</div>
+
+
+<div class="tab-pane" id="info">
+
+<table>
+<tr>
+  <th><%= User.human_attribute_name :notify_email %></th>
+  <td><%= @user.email %></td>
+</tr>
+<tr>
+  <th><%= User.human_attribute_name :last_checked_at %></th>
+  <td><%= @user.last_notified_at ? l(@user.last_notified_at) : '(None)' %></td>
+</tr>
+</table>
+</div>
+
+<div class="tab-pane" id="manage">
+<p class="well">
+<%= link_to 'Reset check timestamp', user_path(@user), :class => 'btn', :method => :post, :data => {:confirm => 'Are your sure reset timestamp?'} %>
+  By resetting timestamp, you will get a notification for all unread files modified within a week.
+</p>
+<p class="well">
+<%= link_to 'Delete your account', user_path(@user), :class => 'btn btn-danger', :method => :delete, :data => {:confirm => 'Are your sure to delete your account on Google Drive Notifier?'} %>
+  You can delete information of your account on Google Drive Notifier. All settings will lost.
+</p>
+</div>
+
+</div>
