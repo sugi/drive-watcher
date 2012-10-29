@@ -17,6 +17,10 @@
 </label>
 <% end %>
 
+<h3><%= User.human_attribute_name :check_interval %></h3>
+<%= f.select :check_interval, options_for_select(Hash[*[2, 4, 6, 12, 24].map{|i| ["#{i} Hours", i]}.flatten]) %>
+
+
 <%= f.submit :class => 'btn btn-primary btn-large' %>
 <% end %>
 </div>

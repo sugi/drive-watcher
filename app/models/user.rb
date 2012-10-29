@@ -11,7 +11,11 @@ class User < ActiveRecord::Base
 
   attr_accessible :account, :auth_token, :check_target, :error_count,
     :last_checked_at, :last_notified_at, :name, :notify_email,
-    :refresh_token, :suspended, :token_expires_at, :token_issued_at
+    :refresh_token, :suspended, :token_expires_at, :token_issued_at,
+    :check_interval
+
+  validates :error_count, :numericality => true
+  validates :check_interval, :numericality => true
 
   check_target_enums = %w(default all own starred)
   enum_attr :check_target, check_target_enums do

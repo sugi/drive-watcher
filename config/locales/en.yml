@@ -5,11 +5,11 @@ en:
   activerecord:
     attributes:
       user:
-        check_target:
+        check_target: Target file
   enumerated_attribute:
     user:
       check_target:
         default: Listed in "Actitity"
         all: All
-        own: Own by me
+        own: Owned by me
         starred: Starred
