@@ -20,6 +20,10 @@ class User < ActiveRecord::Base
 
   BACKWARD_LIMIT = 7.days
 
+  def admin?
+    Rails.configuration.admin_users.member? self.account
+  end
+
   def type_serach_query
     case self.check_target
     when "all"
