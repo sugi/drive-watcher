@@ -2,12 +2,15 @@ DriveWatcher::Application.routes.draw do
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks", :sessions => 'users/sessions' }
   devise_scope :user do
     get 'sign_in',  :to => 'users/sessions#new',     :as => :new_user_session  # TODO: fix
-    get 'sign_out', :to => 'users/sessions#destroy', :as => :destroy_user_session
+    match 'sign_out', :to => 'users/sessions#destroy', :as => :destroy_user_session
   end
 
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
 
   resources :users
+
+  get "welcome/index"
+  get "welcome/login_failed"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -58,7 +61,7 @@ DriveWatcher::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => 'welcome#index'
+  root :to => 'welcome#index'
 
   # See how all your routes lay out with "rake routes"
 
