@@ -50,12 +50,12 @@
             <a class="brand" name="logo">Google Drive Notifier</a>
             <div class="container nav-collapse">
               <ul class="nav">
-                <li><a href="">github(todo)</a></li>
-                <li><a href="">report issue(todo)</a></li>
+                <li><a href="http://github.com/">github(todo)</a></li>
+                <li><a href="http://github.com/">report issue(todo)</a></li>
                 <% if user_signed_in? %>
-                <li><%= link_to "Sign-out", destroy_user_session_path %></li>
+                <li><%= link_to "Sign out", destroy_user_session_path %></li>
                 <% else %>
-                <li><%= link_to "Sign-in/up", new_user_session_path %></li>
+                <li><%= link_to "Sign in", new_user_session_path %></li>
                 <% end %>
               </ul>
             </div><!--/.nav-collapse -->

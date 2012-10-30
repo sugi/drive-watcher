@@ -7,7 +7,12 @@ DriveWatcher::Application.routes.draw do
 
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
 
-  resources :users
+  resources :users do
+    member do
+      put 'check' => 'users#check'
+      put 'reset_stamp' => 'users#reset_stamp'
+    end
+  end
 
   get "welcome/index"
   get "welcome/login_failed"

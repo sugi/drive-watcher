@@ -14,8 +14,10 @@
 <label>
 <%= f.radio_button :check_target, k %>
 <strong><%= l %></strong><br>
+<p class="check-target-desc"><%= t ".check_target_descriptions.#{k}" %></p>
 </label>
 <% end %>
+<p class="muted">In any case, all files will be ignored they has been modified over a week ago.</p>
 
 <h3><%= User.human_attribute_name :check_interval %></h3>
 <%= f.collection_select :check_interval, [2, 4, 6, 12, 24].map{|i| [i, "#{i} Hours"]}, :first, :last %>
@@ -35,6 +37,10 @@
 </tr>
 <tr>
   <th><%= User.human_attribute_name :last_checked_at %></th>
+  <td><%= @user.last_checked_at ? l(@user.last_checked_at) : '(None)' %></td>
+</tr>
+<tr>
+  <th><%= User.human_attribute_name :last_notified_at %></th>
   <td><%= @user.last_notified_at ? l(@user.last_notified_at) : '(None)' %></td>
 </tr>
 </table>
@@ -42,12 +48,18 @@
 
 <div class="tab-pane" id="manage">
 <p class="well">
-<%= link_to 'Reset check timestamp', user_path(@user), :class => 'btn', :method => :post, :data => {:confirm => 'Are your sure reset timestamp?'} %>
+<%= link_to 'Reset check timestamp', reset_stamp_user_path(@user), :class => 'btn', :method => :put, :data => {:confirm => 'Are your sure reset timestamp?'} %>
   By resetting timestamp, you will get a notification for all unread files modified within a week.
 </p>
+<% if current_user && (current_user.admin? || current_user.last_checked_at.to_i < (Time.now.to_i - 600)) %>
+<p class="well">
+<%= link_to 'Check Now', check_user_path(@user), :class => 'btn', :method => :put %>
+  Check and send notification immediately. (Debug purpose)
+</p>
+<% end %>
 <p class="well">
 <%= link_to 'Delete your account', user_path(@user), :class => 'btn btn-danger', :method => :delete, :data => {:confirm => 'Are your sure to delete your account on Google Drive Notifier?'} %>
-  You can delete information of your account on Google Drive Notifier. All settings will lost.
+  You can delete your account information on Google Drive Notifier. All settings will lost, and notification will stop completely.
 </p>
 </div>
 

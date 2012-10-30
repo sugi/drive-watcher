@@ -3,6 +3,8 @@ body {
   font-size: 86%;
 }
 
+input[type="radio"] { vertical-align: top; }
+
 .field_with_errors {
   padding: 2px;
   background-color: red;
@@ -32,8 +34,10 @@ body {
   }
 }
 
-#main-navi .nav { float: right; }
-#main-navi .brand:hover { background-color: inherit; }
+#main-navi {
+  .nav { float: right; }
+  .brand:hover { background-color: inherit; }
+}
 #main-content { margin-top: 1em; }
 footer {
   margin-top: 6em;
@@ -48,4 +52,9 @@ footer {
   a.btn { min-width: 16em; }
 }
 
-#main-ui .btn { float: right; }
+.check-target-desc { margin-left: 1.4em; }
+
+#main-ui {
+  .btn { float: right; }
+  #manage .btn { min-width: 12em; margin-left: 1em; }
+}

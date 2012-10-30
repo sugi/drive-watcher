@@ -1,0 +1,11 @@
+You have unread files on your Google Drive.
+
+<% @user.unread_files.each do |file| %>
+* <%= file["title"]%>
+  Modified at <%= l file["modifiedDate"] %> by <%= file["lastModifyingUserName"].html_safe %>
+  <%= file["alternateLink"].html_safe %>
+
+<% end %>
+
+ -----------------------------------------------------------------------
+/ Google Drive Notifier / <%= root_path(:only_path => false) %>

@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   attr_accessible :account, :auth_token, :check_target, :error_count,
     :last_checked_at, :last_notified_at, :name, :notify_email,
     :refresh_token, :suspended, :token_expires_at, :token_issued_at,
-    :check_interval
+    :check_interval, :locale
 
   validates :error_count, :numericality => true
   validates :check_interval, :numericality => true
@@ -58,7 +58,7 @@ class User < ActiveRecord::Base
   end
 
   def type_serach_query
-    case self.check_target
+    case self.check_target.to_s
     when "all"
       nil
     when "starred"
@@ -70,33 +70,40 @@ class User < ActiveRecord::Base
     end
   end
 
-  def unread_files
-    updated_files.find_all { |i|
+  def notify_unread
+    unread_files.empty? and return false
+    UserMailer.notify_unread(self).deliver
+  end
+
+  def unread_files(reload = false)
+    updated_files(reload).find_all { |i|
       !i["lastViewedByMeDate"] || i["modifiedDate"] > i["lastViewedByMeDate"]
     }
   end
 
-  def updated_files
+  def updated_files(reload = false)
+    !reload && @_updated_files and return @_updated_files
     start_date_limit = DateTime.now - BACKWARD_LIMIT
     start_date = last_checked_at || start_date_limit
     start_date < start_date_limit and start_date = start_date_limit
     check_stamp = DateTime.now
-    params = {:q => [type_serach_query, "modifiedDate >= '#{start_date.to_datetime.utc.strftime("%FT%TZ")}'"].compact.join(' and ')}
+    params = {:q => [type_serach_query,
+      "modifiedDate >= '#{start_date.to_datetime.utc.strftime("%FT%TZ")}'",
+      "mimeType != 'application/vnd.google-apps.folder'"
+    ].compact.join(' and ')}
     ret = []
     loop do
+      logger.debug "[get files for #{account}] send API request param=#{params.inspect}"
       result = gapi_request :list, params
-      if block_given?
-        result.data.items.each do |item|
-          ret << yield(item)
-        end
-      else
-        ret << result.data.items.to_a
-      end
+      logger.debug "[get files for #{account}] API request success."
+      ret << result.data.items.to_a
       result.next_page_token or break
+      logger.debug "[get files for #{account}]: Next page found. try again"
       params[:pageToken] = result.next_page_token
     end
+    logger.debug "Getting files for #{account} completed. Updateing stamp..."
     update_attribute :last_checked_at, check_stamp
-    ret.flatten
+    @_updated_files = ret.flatten
   end
 
   private
@@ -104,7 +111,7 @@ class User < ActiveRecord::Base
     @gapi_client or return
     auth = @gapi_client.authorization
     auth.expired? or return
-    logger.debug "Google API: access token has been expired, trying refresh..."
+    logger.debug "Google API: access token for #{account} has been expired, trying refresh..."
     auth.fetch_access_token!
     self.update_attributes!({
                               :token_expires_at => auth.expires_at,
@@ -112,7 +119,7 @@ class User < ActiveRecord::Base
                               :auth_token       => auth.access_token,
                               :refresh_token    => auth.refresh_token,
                             })
-    logger.debug "Google API: access token refresh success."
+    logger.debug "Google API: access token for #{account} refresh success."
   end
 
   def gapi_client

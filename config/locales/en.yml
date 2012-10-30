@@ -9,7 +9,20 @@ en:
   enumerated_attribute:
     user:
       check_target:
-        default: Listed in "Actitity"
+        default: 'Listed in "Actitity"'
         all: All
         own: Owned by me
         starred: Starred
+  user_mailer:
+    notify_unread:
+      subject: "Update documents on Google Drive"
+  users:
+    show:
+      check_target_descriptions:
+        default: '(Default) Check files listed on "Activity". You can organize list by "remove from Activity" button on Google Drive.'
+        all: "Check all files you own and shared with you."
+        own: ""
+        starred: ""
+    
+  unread_files_found: "%{num} unread files found."
+  reset_stamp_success: "Check timestamp has been reset successfully."
