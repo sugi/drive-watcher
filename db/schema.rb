@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(:version => 20121030084117) do
     t.string   "check_target",     :default => "default", :null => false
     t.datetime "created_at",                              :null => false
     t.datetime "updated_at",                              :null => false
-    t.integer  "check_interval",   :default => 2,         :null => false
+    t.integer  "check_interval",   :default => 12,        :null => false
     t.string   "locale"
   end
 
