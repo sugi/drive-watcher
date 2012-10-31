@@ -19,6 +19,7 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe UsersController do
+  login_admin
 
   # This should return the minimal set of attributes required to create a valid
   # User. As you add validations to User, be sure to
@@ -36,11 +37,20 @@ describe UsersController do
     {}
   end
 
+  it "shoud have a current_user" do
+    subject.current_user.should_not be_nil
+    subject.user_signed_in?.should be_true
+  end
+
+  it "current_user should be admin" do
+    subject.current_user.should be_admin
+  end
+
   describe "GET index" do
     it "assigns all users as @users" do
       user = User.create! valid_attributes
       get :index, {}, valid_session
-      assigns(:users).should eq([user])
+      assigns(:users).dup[1..-1].should eq([user])
     end
   end
 

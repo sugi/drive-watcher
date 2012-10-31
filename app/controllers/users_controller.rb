@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+  before_filter :authenticate_user!
+  load_and_authorize_resource
+
   def index
     @users = User.all
     respond_with(@users)
@@ -39,7 +42,7 @@ class UsersController < ApplicationController
   def check
     @user = User.find(params[:id])
     @files = @user.unread_files
-    @user.notify_unread
+    @user.send_unread_notify
     respond_with @files,
       :location => user_path(:id => @user.id, :anchor => 'manage'),
       :notice => I18n.t("unread_files_found", :num => @files.size)

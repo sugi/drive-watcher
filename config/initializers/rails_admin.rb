@@ -6,6 +6,8 @@ RailsAdmin.config do |config|
 
   ################  Global configuration  ################
 
+  config.authorize_with :cancan
+
   # Set the admin name here (optional second array element will appear in red). For example:
   config.main_app_name = ['Drive Watcher', 'Admin']
   # or for a more dynamic name:

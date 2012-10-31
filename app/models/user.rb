@@ -14,8 +14,9 @@ class User < ActiveRecord::Base
     :refresh_token, :suspended, :token_expires_at, :token_issued_at,
     :check_interval, :locale
 
-  validates :error_count, :numericality => true
-  validates :check_interval, :numericality => true
+  validates :error_count, :numericality => { :only_integer => true }, :allow_nil => true
+  validates :check_interval, :numericality => { :only_integer => true, :greater_than => 0 }, :allow_nil => true
+  validates :locale, :length => { :is => 2 }, :allow_nil => true
 
   check_target_enums = %w(default all own starred)
   enum_attr :check_target, check_target_enums do
@@ -70,19 +71,22 @@ class User < ActiveRecord::Base
     end
   end
 
-  def notify_unread
-    unread_files.empty? and return false
+  def send_unread_notify(opts = {})
+    unread_files(opts).empty? and return false
+    logger.info "[User #{account}] #{unread_files.count} unread files found. Sending notification"
     UserMailer.notify_unread(self).deliver
+    update_attribute :last_notified_at, DateTime.now
   end
 
-  def unread_files(reload = false)
-    updated_files(reload).find_all { |i|
+  def unread_files(opts = {})
+    updated_files(opts).find_all { |i|
       !i["lastViewedByMeDate"] || i["modifiedDate"] > i["lastViewedByMeDate"]
     }
   end
 
-  def updated_files(reload = false)
-    !reload && @_updated_files and return @_updated_files
+  def updated_files(opts = {})
+    opts = {:reload => false}.merge(opts)
+    !opts[:reload] && @_updated_files and return @_updated_files
     start_date_limit = DateTime.now - BACKWARD_LIMIT
     start_date = last_checked_at || start_date_limit
     start_date < start_date_limit and start_date = start_date_limit
@@ -93,15 +97,15 @@ class User < ActiveRecord::Base
     ].compact.join(' and ')}
     ret = []
     loop do
-      logger.debug "[get files for #{account}] send API request param=#{params.inspect}"
+      logger.debug "[User #{account}] send API request to get files param=#{params.inspect}"
       result = gapi_request :list, params
-      logger.debug "[get files for #{account}] API request success."
+      logger.debug "[User #{account}] file list API request success."
       ret << result.data.items.to_a
       result.next_page_token or break
-      logger.debug "[get files for #{account}]: Next page found. try again"
+      logger.debug "[User #{account}]: file list: Next page found. try again"
       params[:pageToken] = result.next_page_token
     end
-    logger.debug "Getting files for #{account} completed. Updateing stamp..."
+    logger.debug "[User #{account}] Getting files completed. Updateing stamp..."
     update_attribute :last_checked_at, check_stamp
     @_updated_files = ret.flatten
   end
@@ -111,7 +115,7 @@ class User < ActiveRecord::Base
     @gapi_client or return
     auth = @gapi_client.authorization
     auth.expired? or return
-    logger.debug "Google API: access token for #{account} has been expired, trying refresh..."
+    logger.debug "[User #{account}] Google API: access token has been expired, trying refresh..."
     auth.fetch_access_token!
     self.update_attributes!({
                               :token_expires_at => auth.expires_at,
@@ -119,7 +123,7 @@ class User < ActiveRecord::Base
                               :auth_token       => auth.access_token,
                               :refresh_token    => auth.refresh_token,
                             })
-    logger.debug "Google API: access token for #{account} refresh success."
+    logger.debug "[User #{account}] Google API: access token refresh success."
   end
 
   def gapi_client
@@ -153,15 +157,15 @@ class User < ActiveRecord::Base
     }
     body and greq[:body] = body
     greq_orig = greq.dup
-    logger.debug "Execute Google API request #{greq[:api_method].id}"
+    logger.debug "[User #{account}] Execute Google API request #{greq[:api_method].id}"
     result = client.execute(greq)
     if result.status < 200 || result.status >= 300
       msg = "Error on Google calendar API '#{method}': status=#{result.status}, request=#{greq_orig.inspect} response=#{result.body}"
-      logger.error msg
-      logger.error result.pretty_inspect
+      logger.error "[User #{account}] #{msg}"
+      #logger.error "[User #{account}] #{result.pretty_inspect}"
       raise GoogleAPIError.new(result, msg)
     end
-    logger.debug "API request #{greq[:api_method].id} success (status=#{result.status})"
+    logger.debug "[User #{account}] API request #{greq[:api_method].id} success (status=#{result.status})"
     result
   end
 end

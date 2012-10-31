@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   def set_locale
     supported_locale = %w(en ja)
     logger.debug "Accept-Language: #{request.env['HTTP_ACCEPT_LANGUAGE']}"
-    request.env['HTTP_ACCEPT_LANGUAGE'].split(/\s,\s/).each do |l|
+    request.env['HTTP_ACCEPT_LANGUAGE'].to_s.split(/\s,\s/).each do |l|
       supported_locale.member?(l[0..1]) or next
       I18n.locale = l[0..1].to_sym
     end

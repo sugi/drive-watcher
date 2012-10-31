@@ -15,7 +15,6 @@ DriveWatcher::Application.routes.draw do
   end
 
   get "welcome/index"
-  get "welcome/login_failed"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

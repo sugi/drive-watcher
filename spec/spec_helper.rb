@@ -3,6 +3,23 @@ require 'spork'
 #uncomment the following line to use spork with the debugger
 #require 'spork/ext/ruby-debug'
 
+TEST_USER_UID = 'account@test.google.com'
+
+module MyControllerHelper
+  def login_admin
+    before(:each) do
+      @request.env["omniauth.auth"] = OmniAuth.config.mock_auth[:google_oauth2] 
+      @request.env["devise.mapping"] = Devise.mappings[:admin]
+      @user = mockuser = User.create!(:account => TEST_USER_UID)
+      sign_in @user
+      subject.current_user
+      subject.instance_eval {
+	@current_ability = nil
+      }
+    end
+  end
+end
+
 Spork.prefork do
   # Loading more in this block will cause your tests to run faster. However,
   # if you change any configuration or code from libraries loaded here, you'll
@@ -46,8 +63,24 @@ Spork.prefork do
     # the seed, which is printed after each run.
     #     --seed 1234
     config.order = "random"
-  end
 
+    
+    ::Rails.configuration.admin_users = [ TEST_USER_UID ]
+    OmniAuth.config.test_mode = true
+    OmniAuth.config.mock_auth[:google_oauth2] = {
+      'provider' => 'google_oauth2',
+      'uid' => TEST_USER_UID,
+      'info' => {'email' => TEST_USER_UID },
+      'credentials' => {'token' => '--atuh-token--', 'refresh_token' => '--refresh-token--', 'expires_at' => Time.now.to_i}
+    }
+    config.include Devise::TestHelpers, :type => :controller
+    config.extend MyControllerHelper, :type => :controller
+    config.before(:each, :type => :view) do
+      user = User.create(:account => TEST_USER_UID)
+      view.stub(:user_signed_in?).and_return(true)
+      view.stub(:current_user).and_return(user)
+    end
+  end
 end
 
 Spork.each_run do
