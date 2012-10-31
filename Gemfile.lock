@@ -1,3 +1,13 @@
+GIT
+  remote: git://github.com/scriptwork/twitter-bootstrap-rails.git
+  revision: b0eac782bb0c0a5f8db4402ef269c0fae4a635d5
+  specs:
+    twitter-bootstrap-rails (2.1.4)
+      actionpack (>= 3.1)
+      less-rails (~> 2.2.3)
+      railties (>= 3.1)
+      therubyracer (>= 0.10.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -103,7 +113,7 @@ GEM
       addressable (~> 2.3)
     less (2.2.2)
       commonjs (~> 0.2.6)
-    less-rails (2.2.5)
+    less-rails (2.2.6)
       actionpack (>= 3.1)
       less (~> 2.2.0)
     libv8 (3.3.10.4)
@@ -229,11 +239,6 @@ GEM
     treetop (1.4.12)
       polyglot
       polyglot (>= 0.3.1)
-    twitter-bootstrap-rails (2.1.4)
-      actionpack (>= 3.1)
-      less-rails (~> 2.2.3)
-      railties (>= 3.1)
-      therubyracer (>= 0.10.2)
     twitter-stream (0.1.16)
       eventmachine (>= 0.12.8)
       http_parser.rb (~> 0.5.1)
@@ -274,6 +279,6 @@ DEPENDENCIES
   spork
   sqlite3
   therubyracer
-  twitter-bootstrap-rails
+  twitter-bootstrap-rails!
   uglifier (>= 1.0.3)
   webrat

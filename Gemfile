@@ -30,7 +30,8 @@ gem 'devise-i18n'
 gem 'rails_admin'
 gem 'cancan'
 
-gem "twitter-bootstrap-rails"
+#gem "twitter-bootstrap-rails"
+gem "twitter-bootstrap-rails", :git => "git://github.com/scriptwork/twitter-bootstrap-rails.git"
 
 group :development, :test do
   gem 'rspec-rails'
