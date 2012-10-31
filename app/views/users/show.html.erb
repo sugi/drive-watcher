@@ -1,7 +1,7 @@
 <ul class="nav nav-tabs">
-<li class="active"><a href="#settings" data-toggle="tab">Settings</a></li>
-<li><a href="#info" data-toggle="tab">Info</a></li>
-<li><a href="#manage" data-toggle="tab">Manage</a></li>
+<li class="active"><a href="#settings" data-toggle="tab"><%= t ".settings" %></a></li>
+<li><a href="#info" data-toggle="tab"><%= t ".info" %></a></li>
+<li><a href="#manage" data-toggle="tab"><%= t ".manage" %></a></li>
 </ul>
 
 <div class="tab-content" id="main-ui">
@@ -13,14 +13,14 @@
 <% @user.enums(:check_target).hash.each do |k, l| %>
 <label>
 <%= f.radio_button :check_target, k %>
-<strong><%= l %></strong><br>
+<strong><%= t "enumerated_attribute.user.check_target.#{k}" %></strong><br>
 <p class="check-target-desc"><%= t ".check_target_descriptions.#{k}" %></p>
 </label>
 <% end %>
-<p class="muted">In any case, all files will be ignored they has been modified over a week ago.</p>
+<p class="muted"><%= t ".target_notice" %></p>
 
 <h3><%= User.human_attribute_name :check_interval %></h3>
-<%= f.collection_select :check_interval, [2, 4, 6, 12, 24].map{|i| [i, "#{i} Hours"]}, :first, :last %>
+<%= f.collection_select :check_interval, [2, 4, 6, 12, 24].map{|i| [i, "#{i} #{t '.hours'}"]}, :first, :last %>
 
 
 <%= f.submit :class => 'btn btn-primary btn-large' %>
@@ -37,31 +37,31 @@
 </tr>
 <tr>
   <th><%= User.human_attribute_name :last_checked_at %></th>
-  <td><%= @user.last_checked_at ? l(@user.last_checked_at) : '(None)' %></td>
+  <td><%= @user.last_checked_at ? l(@user.last_checked_at) : t('none') %></td>
 </tr>
 <tr>
   <th><%= User.human_attribute_name :last_notified_at %></th>
-  <td><%= @user.last_notified_at ? l(@user.last_notified_at) : '(None)' %></td>
+  <td><%= @user.last_notified_at ? l(@user.last_notified_at) : t('none') %></td>
 </tr>
 </table>
 </div>
 
 <div class="tab-pane" id="manage">
 <p class="well">
-<%= link_to 'Reset check timestamp', reset_stamp_user_path(@user), :class => 'btn', :method => :put, :data => {:confirm => 'Are your sure reset timestamp?'} %>
-  By resetting timestamp, you will get a notification for all unread files modified within a week. (Debug purpose)
+<%= link_to t(".reset_stamp_button"), reset_stamp_user_path(@user), :class => 'btn', :method => :put, :data => {:confirm => t(".reset_stamp_confirm")} %>
+  <%= t ".reset_stamp_desc" %>
 </p>
 <p class="well">
 <% if current_user && (current_user.admin? || current_user.last_checked_at.to_i < (Time.now.to_i - 600)) %>
-<%= link_to 'Check Now', check_user_path(@user), :class => 'btn', :method => :put %>
+<%= link_to t(".check_now_button"), check_user_path(@user), :class => 'btn', :method => :put %>
 <% else %>
-<a class="btn disabled">Check Now</a>
+<a class="btn disabled"><%= t ".check_now_button" %></a>
 <% end %>
-  Check and send notification immediately. (Debug purpose)
+  <%= t ".check_now_desc" %>
 </p>
 <p class="well">
-<%= link_to 'Delete your account', user_path(@user), :class => 'btn btn-danger', :method => :delete, :data => {:confirm => 'Are your sure to delete your account on Google Drive Notifier?'} %>
-  You can delete your account information on Google Drive Notifier. All settings will lost, and notification will stop completely.
+<%= link_to t('.delete_button'), user_path(@user), :class => 'btn btn-danger', :method => :delete, :data => {:confirm => t(".delete_confirm")} %>
+  <%= t ".delete_desc" %>
 </p>
 </div>
 

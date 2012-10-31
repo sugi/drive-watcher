@@ -9,13 +9,20 @@ en:
   enumerated_attribute:
     user:
       check_target:
-        default: 'Listed in "Actitity"'
+        default: 'Listed in "Actitity" (HOME)'
         all: All
         own: Owned by me
         starred: Starred
-  user_mailer:
-    notify_unread:
-      subject: "Update documents on Google Drive"
+  welcome:
+    index:
+      description: "Google Drive Notifier check your Google Drive and send notification mail when documents updated."
+      motive: "I hope Google Drive have this function, but not yet. So I wrote and released notifier as a web app to allow everyone share. Use this web app freely."
+      features: Features
+      feature_1: "Notify via email for document updates."
+      feature_2: "Configurable check target (Activity, All, Own, Starred)."
+      feature_3: "Configurable check interval."
+      feature_4: "...just all!"
+      sign_in_with_google: 'Sign in with Google'
   users:
     show:
       check_target_descriptions:
@@ -23,6 +30,25 @@ en:
         all: "Check all files you own and shared with you."
         own: ""
         starred: ""
-    
+      target_notice: "In any case, all files will be ignored they has been modified over a week ago."
+      hours: Hours
+      settings: Settings
+      info: Info
+      manage: Manage
+      reset_stamp_button: 'Reset check timestamp'
+      reset_stamp_confirm: "Are your sure reset timestamp?"
+      reset_stamp_desc: "By resetting timestamp, you will get a notification for all unread files modified within a week. (Debug purpose)"
+      check_now_button: 'Check Now'
+      check_now_desc: "Check and send notification immediately. (Debug purpose)"
+      delete_button: 'Delete your account'
+      delete_confirm: 'Are your sure to delete your account on Google Drive Notifier?'
+      delete_desc: "You can delete your account information on Google Drive Notifier. All settings will lost, and notification will stop completely."
+  user_mailer:
+    notify_unread:
+      subject: "Update documents on Google Drive"
+      you_have_unread: "You have unread files on your Google Drive."
+      mod_at_by: "Modified at %{date} by %{user}"
+      
   unread_files_found: "%{num} unread files found."
   reset_stamp_success: "Check timestamp has been reset successfully."
+  none: "(None)"

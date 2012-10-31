@@ -2,29 +2,22 @@
 
 <div class="row">
   <div class="span8">
-<p>
-  Google Drive Notifier check your Google Drive and
-  send notification mail when documents updated.
-</p>
+<p><%= t ".description" %></p>
 
-<p>
-  I hope Google Drive have this function, but not yet.
-  So I wrote and released notifier as a web app to allow
-  everyone share. Use this web app freely.
-</p>
+<p><%= t ".motive" %></p>
 
-<h3>Features</h3>
+<h3><%= ".features" %></h3>
 <ul>
-  <li>Notify via email for document updates.</li>
-  <li>Configurable check target (Activity, All, Own, Starred).</li>
-  <li>Configurable check interval.</li>
-  <li>...just all!</li>
+  <li><%= t ".feature_1" %></li>
+  <li><%= t ".feature_2" %></li>
+  <li><%= t ".feature_3" %></li>
+  <li><%= t ".feature_4" %></li>
 </ul>
 
 <% if !user_signed_in? %>
 <p class="welcome-signin">
-<%= link_to 'Sign in with Google', new_user_session_path, :class => 'btn btn-large btn-primary' %>
+<%= link_to t(".sign_in_with_google"), new_user_session_path, :class => 'btn btn-large btn-primary' %>
 </p>
 <% end %>
   </div>
-</div><!--/row-->
+</div>

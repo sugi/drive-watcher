@@ -1,0 +1,55 @@
+ja:
+  activerecord:
+    attributes:
+      user:
+        check_target: チェック対象
+        check_interval: チェック間隔
+        notify_email: 通知先アドレス
+        last_checked_at: 最終チェック日時
+        last_notified_at: 最終通知日時
+  enumerated_attribute:
+    user:
+      check_target:
+        default: 更新情報 (ホーム)
+        all: すべて
+        own: 自分がオーナー
+        starred: スター付き
+  welcome:
+    index:
+      description: "Google Drive Notifier は Google Drive 上の新規未読ファイルをチェックし、メールで通知するサービスです。"
+      motive: "Google Drive 自身にこの機能があれば良いと思うのですが、まだ無かったので作りました。個人的な必要性で開発しましたが、Webサービスとして実装し、誰でもすぐ利用できるようにしてあります。興味があれば自由にお使いください。"
+      features: 機能
+      feature_1: "更新された文書を見つけたら通知します"
+      feature_2: "チェック対象の設定が可能 (更新情報, すべて, 所有, スター)."
+      feature_3: "チェック間隔の設定が可能"
+      feature_4: "...それだけ!"
+      sign_in_with_google: 'Googleアカウントでサインイン'
+  users:
+    show:
+      check_target_descriptions:
+        default: '(標準) 「更新情報(旧ホーム)」にリストされたファイルをチェックします。対象は Google Drive 上で「更新情報に表示しない」メニューを使うことで編集できます。'
+        all: "所有しているもの、共有されているもの、全てのファイルをチェックします。"
+        own: ""
+        starred: ""
+      target_notice: "どれを選んでも、更新日が１週間以上前のファイルは通知対象になりません。"
+      hours: 時間
+      settings: 設定
+      info: 情報
+      manage: 管理
+      reset_stamp_button: '前回チェック時間のクリア'
+      reset_stamp_confirm: "前回のチェック時間をクリアしてよろしいですか?"
+      reset_stamp_desc: "前回のチェック時間の記録をリセットすると、１週間以内の全ての未読ファイルに関する通知を再度受け取ります。 (デバッグ用)"
+      check_now_button: '今すぐチェック'
+      check_now_desc: "即座に未読ファイルのチェックを行い、通知を送信します。 (デバッグ用)"
+      delete_button: 'アカウントを削除'
+      delete_confirm: 'Google Drive Notifier 上のアカウントを本当に削除してよろしいですか?'
+      delete_desc: "Google Drive Notifier 上のアカウント情報を削除できます。全ての設定は失われ、通知は全く送られなくなります。"
+  user_mailer:
+    notify_unread:
+      subject: "Google Drive 更新通知"
+      you_have_unread: "Google Drive に新しい未読ファイルがあります。"
+      mod_at_by: "%{date} (%{user})"
+      
+  unread_files_found: "%{num} 件の未読ファイルを検出しました。"
+  reset_stamp_success: "前回チェック時間をリセットしました。"
+  none: "(なし)"
