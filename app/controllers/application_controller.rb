@@ -8,6 +8,23 @@ class ApplicationController < ActionController::Base
 
   before_filter :set_locale, :set_time_zone
 
+  rescue_from CanCan::AccessDenied do |exception|
+    render :text => exception.message, :status => 403
+  end
+
+  rescue_from ActiveRecord::RecordNotFound do |exception|
+    logger.error "[RecordNotFound] #{exception.message}\n"+exception.backtrace.join("\n")
+    render_404
+  end
+
+  def render_404
+    respond_to do |format|
+      format.html { render :file => "#{Rails.root}/public/404.html", :status => :not_found }
+      format.xml  { head :not_found, :status => :not_found }
+      format.any  { head :not_found, :status => :not_found }
+    end
+  end
+
   private
   def set_locale
     supported_locale = %w(en ja)
