@@ -9,6 +9,7 @@ gem 'sqlite3', :group => [:test, :development]
 group :production do
   gem 'pg'
   gem 'thin'
+  gem 'exception_notification', :require => 'exception_notifier', :git => 'git://github.com/alanjds/exception_notification.git'
 end
 
 # Gems used only for assets and not required
@@ -26,7 +27,6 @@ gem 'rails-i18n'
 gem 'google-api-client', :require => 'google/api_client'
 gem 'omniauth', '~> 1.0.0'
 gem 'omniauth-google-oauth2'
-gem 'exception_notification', :group => :production, :require => 'exception_notifier'
 gem 'enumerated_attribute'
 gem 'devise'
 gem 'devise-i18n'
