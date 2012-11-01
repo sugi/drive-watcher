@@ -9,14 +9,14 @@ en:
   enumerated_attribute:
     user:
       check_target:
-        default: 'Listed in "Actitity" (HOME)'
+        default: 'Actitity (HOME)'
         all: All
         own: Owned by me
         starred: Starred
   welcome:
     index:
       description: "Google Drive Notifier check your Google Drive and send notification mail when documents updated."
-      motive: "I hope Google Drive have this function, but not yet. So I wrote and released notifier as a web app to allow everyone share. Use this web app freely."
+      motive: "I hope Google Drive have this function, but not yet. I started to make this function by personal requirement, but I implement as a web service to share with everyone. Use this web app freely if you interest."
       features: Features
       feature_1: "Notify via email for document updates."
       feature_2: "Configurable check target (Activity, All, Own, Starred)."
