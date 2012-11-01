@@ -1,7 +1,7 @@
 <h2>Welcome! <small>- Get update notification for your google drive -</small></h2>
 
 <div class="row">
-  <div class="span8">
+  <div class="span9">
 <p><%= t ".description" %></p>
 
 <p><%= t ".motive" %></p>
@@ -19,5 +19,8 @@
 <%= link_to t(".sign_in_with_google"), new_user_session_path, :class => 'btn btn-large btn-primary' %>
 </p>
 <% end %>
+  </div>
+  <div class="span3 visible-desktop">
+    <%= image_tag 'hero.jpg', :class => 'hero-img' %>
   </div>
 </div>
