@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   respond_to :html, :xml, :json
   self.responder = MyResponder
 
-  before_filter :set_locale
+  before_filter :set_locale, :set_time_zone
 
   private
   def set_locale
@@ -22,5 +22,12 @@ class ApplicationController < ActionController::Base
       current_user.update_attribute :locale, I18n.locale.to_s
     end
     controller_name == "main" and I18n.locale = :en
+    true
+  end
+
+  def set_time_zone
+    user_signed_in? or return true
+    Time.zone = current_user.time_zone
+    true
   end
 end

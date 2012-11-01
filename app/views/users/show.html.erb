@@ -8,7 +8,6 @@
 <div class="tab-pane active" id="settings">
 
 <%= form_for(@user) do |f| %>
-
 <h3><%= User.human_attribute_name :check_target %></h3>
 <% @user.enums(:check_target).hash.each do |k, l| %>
 <label>
@@ -22,6 +21,9 @@
 <h3><%= User.human_attribute_name :check_interval %></h3>
 <%= f.collection_select :check_interval, [2, 4, 6, 12, 24].map{|i| [i, "#{i} #{t '.hours'}"]}, :first, :last %>
 
+<h3><%= User.human_attribute_name :time_zone %></h3>
+<%= f.time_zone_select :time_zone %>
+<span class="btn btn-mini filter-time-zone" data-target="user_time_zone"><i class="icon-filter"></i></span>
 
 <%= f.submit :class => 'btn btn-primary btn-large' %>
 <% end %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121030084117) do
+ActiveRecord::Schema.define(:version => 20121101084321) do
 
   create_table "rails_admin_histories", :force => true do |t|
     t.text     "message"
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(:version => 20121030084117) do
     t.datetime "updated_at",                              :null => false
     t.integer  "check_interval",   :default => 12,        :null => false
     t.string   "locale"
+    t.string   "time_zone",        :default => "UTC",     :null => false
   end
 
   add_index "users", ["account"], :name => "index_users_on_account", :unique => true
