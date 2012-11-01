@@ -30,7 +30,7 @@ en:
         all: "Check all files you own and shared with you."
         own: ""
         starred: ""
-      target_notice: "In any case, all files will be ignored they has been modified over a week ago."
+      target_notice: "Note: In any case, all files will be ignored they has been modified over a week ago."
       hours: Hours
       settings: Settings
       info: Info
