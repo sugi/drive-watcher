@@ -7,6 +7,7 @@ ja:
         notify_email: 通知先アドレス
         last_checked_at: 最終チェック日時
         last_notified_at: 最終通知日時
+        time_zone: タイムゾーン
   enumerated_attribute:
     user:
       check_target:
@@ -27,11 +28,11 @@ ja:
   users:
     show:
       check_target_descriptions:
-        default: '(標準) 「更新情報(旧ホーム)」にリストされたファイルをチェックします。対象は Google Drive 上で「更新情報に表示しない」メニューを使うことで編集できます。'
+        default: '(標準) 「更新情報(旧:ホーム)」にリストされたファイルをチェックします。対象は Google Drive 上で「更新情報に表示しない」メニューを使うことで編集できます。'
         all: "所有しているもの、共有されているもの、全てのファイルをチェックします。"
-        own: ""
-        starred: ""
-      target_notice: "どれを選んでも、更新日が１週間以上前のファイルは通知対象になりません。"
+        own: "所有者が自分のファイルのみを対象にします。"
+        starred: "「スター」を付けたファイルのみを対象にします。"
+      target_notice: "注意: どれを選んでも、更新日が１週間以上前のファイルは通知対象になりません。"
       hours: 時間
       settings: 設定
       info: 情報
