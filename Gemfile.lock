@@ -57,6 +57,7 @@ GEM
     coffee-script-source (1.4.0)
     commonjs (0.2.6)
     daemons (1.1.9)
+    dalli (2.3.0)
     devise (2.1.2)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
@@ -266,6 +267,7 @@ PLATFORMS
 DEPENDENCIES
   cancan
   coffee-rails (~> 3.2.1)
+  dalli
   devise
   devise-i18n
   enumerated_attribute

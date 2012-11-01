@@ -32,6 +32,7 @@ gem 'devise'
 gem 'devise-i18n'
 gem 'rails_admin'
 gem 'cancan'
+gem 'dalli'
 
 #gem "twitter-bootstrap-rails"
 gem "twitter-bootstrap-rails", :git => "git://github.com/scriptwork/twitter-bootstrap-rails.git"
