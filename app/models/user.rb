@@ -76,6 +76,7 @@ class User < ActiveRecord::Base
     logger.info "[User #{account}] #{unread_files.count} unread files found. Sending notification"
     UserMailer.notify_unread(self).deliver
     update_attribute :last_notified_at, DateTime.now
+    update_attribute :notify_count,     notify_count + 1
   end
 
   def unread_files(opts = {})
