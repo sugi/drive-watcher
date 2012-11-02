@@ -60,5 +60,9 @@ module DriveWatcher
     config.assets.version = '1.0'
 
     config.mail_from = 'drivenotify@nemui.org'
+    config.scm_url = ENV['SCM_URL']
+    config.scm_label = ENV['SCM_LABEL'] || 'github'
+    config.report_issue_url = ENV['REPORT_ISSUE_URL']
+
   end
 end
