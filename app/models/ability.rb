@@ -29,7 +29,7 @@ class Ability
     if user.admin?
       can :manage, :all
     else
-      can :manage, User, :id => user.id
+      can [:show, :update, :destroy, :check, :reset_stamp], User, :id => user.id
     end
   end
 end
