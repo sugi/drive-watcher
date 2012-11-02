@@ -8,6 +8,7 @@ ja:
         last_checked_at: 最終チェック日時
         last_notified_at: 最終通知日時
         time_zone: タイムゾーン
+        notify_count: 通知カウント
   enumerated_attribute:
     user:
       check_target:

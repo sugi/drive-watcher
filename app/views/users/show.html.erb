@@ -45,6 +45,10 @@
   <th><%= User.human_attribute_name :last_notified_at %></th>
   <td><%= @user.last_notified_at ? l(@user.last_notified_at) : t('none') %></td>
 </tr>
+<tr>
+  <th><%= User.human_attribute_name :notify_count %></th>
+  <td><%= @user.notify_count %></td>
+</tr>
 </table>
 </div>
 
