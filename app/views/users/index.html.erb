@@ -3,7 +3,6 @@
 <table>
   <tr>
     <th>Account</th>
-    <th>Name</th>
     <th>Notify email</th>
     <th>Refresh token</th>
     <th>Auth token</th>
@@ -22,7 +21,6 @@
 <% @users.each do |user| %>
   <tr>
     <td><%= user.account %></td>
-    <td><%= user.name %></td>
     <td><%= user.notify_email %></td>
     <td><%= user.refresh_token %></td>
     <td><%= user.auth_token %></td>
