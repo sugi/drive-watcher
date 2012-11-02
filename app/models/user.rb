@@ -25,6 +25,8 @@ class User < ActiveRecord::Base
     end
   end
 
+  scope :active, where(:suspended => false)
+
   BACKWARD_LIMIT = 7.days
 
   class << self
