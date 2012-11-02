@@ -10,9 +10,9 @@ class User < ActiveRecord::Base
   devise :omniauthable
 
   attr_accessible :account, :auth_token, :check_target,
-    :last_checked_at, :last_notified_at, :name, :notify_email,
-    :refresh_token, :suspended, :token_expires_at, :token_issued_at,
-    :check_interval, :locale, :time_zone
+    :last_checked_at, :last_notified_at, :notify_email,
+    :refresh_token, :suspended, :token_expires_at,
+    :token_issued_at, :check_interval, :locale, :time_zone
 
   validates :error_count, :numericality => { :only_integer => true }, :allow_nil => true
   validates :check_interval, :numericality => { :only_integer => true, :greater_than => 0 }, :allow_nil => true
