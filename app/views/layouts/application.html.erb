@@ -30,11 +30,12 @@
             <a class="brand" name="logo">Google Drive Notifier</a>
             <div class="container nav-collapse">
               <ul class="nav">
-                <% unless config.scm_url.blank? %>
-                <li><%= link_to config.scm_label, config.scm_url %></li>
+                <% rconf = Rails.configuration %>
+                <% unless rconf.scm_url.blank? %>
+                <li><%= link_to rconf.scm_label, rconf.scm_url %></li>
                 <% end %>
-                <% unless config.report_issue_url.blank? %>
-                <li><%= link_to 'report issue', config.report_issue_url %></li>
+                <% unless rconf.report_issue_url.blank? %>
+                <li><%= link_to 'report issue', rconf.report_issue_url %></li>
                 <% end %>
                 <% if user_signed_in? %>
                 <li><%= link_to "Sign out", destroy_user_session_path %></li>
