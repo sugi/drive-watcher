@@ -5,7 +5,6 @@ describe "users/index" do
     assign(:users, [
       stub_model(User,
         :account => "Account",
-        :name => "Name",
         :notify_email => "Notify Email",
         :refresh_token => "Refresh Token",
         :auth_token => "Auth Token",
@@ -15,7 +14,6 @@ describe "users/index" do
       ),
       stub_model(User,
         :account => "Account",
-        :name => "Name",
         :notify_email => "Notify Email",
         :refresh_token => "Refresh Token",
         :auth_token => "Auth Token",
@@ -30,7 +28,6 @@ describe "users/index" do
     render
     # Run the generator again with the --webrat flag if you want to use webrat matchers
     assert_select "tr>td", :text => "Account".to_s, :count => 2
-    assert_select "tr>td", :text => "Name".to_s, :count => 2
     assert_select "tr>td", :text => "Notify Email".to_s, :count => 2
     assert_select "tr>td", :text => "Refresh Token".to_s, :count => 2
     assert_select "tr>td", :text => "Auth Token".to_s, :count => 2
