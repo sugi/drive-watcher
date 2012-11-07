@@ -2,7 +2,7 @@
 
 <% @user.unread_files.each do |file| %>
 * <%= file["title"].html_safe %>
-  <%= t ".mod_at_by", :date => l(file["modifiedDate"]), :user => file["lastModifyingUserName"] %>
+  <%= t ".mod_at_by", :date => l(file["modifiedDate"].in_time_zone(@user.time_zone)), :user => file["lastModifyingUserName"] %>
   <%= file["alternateLink"].html_safe %>
 
 <% end %>
