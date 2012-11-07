@@ -1,43 +1,27 @@
 <h1>Listing users</h1>
 
-<table>
+<table class="table table-striped">
   <tr>
     <th>Account</th>
-    <th>Notify email</th>
-    <th>Refresh token</th>
-    <th>Auth token</th>
-    <th>Token issued at</th>
-    <th>Token expires at</th>
-    <th>Error count</th>
-    <th>Suspended</th>
+    <th>Created at</th>
+    <th>Target</th>
     <th>Last checked at</th>
     <th>Last notified at</th>
-    <th>Check target</th>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th>#N</th>
+    <th>TZ</th>
+    <th>Loc</th>
   </tr>
 
 <% @users.each do |user| %>
   <tr>
-    <td><%= user.account %></td>
-    <td><%= user.notify_email %></td>
-    <td><%= user.refresh_token %></td>
-    <td><%= user.auth_token %></td>
-    <td><%= user.token_issued_at %></td>
-    <td><%= user.token_expires_at %></td>
-    <td><%= user.error_count %></td>
-    <td><%= user.suspended %></td>
+    <td><%= user.account.sub(/^(.{6}).*(.{6})/, '\1...\2') %></td>
+    <td><%= user.created_at %></td>
+    <td><%= user.check_target %></td>
     <td><%= user.last_checked_at %></td>
     <td><%= user.last_notified_at %></td>
-    <td><%= user.check_target %></td>
-    <td><%= link_to 'Show', user %></td>
-    <td><%= link_to 'Edit', edit_user_path(user) %></td>
-    <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= user.notify_count %></td>
+    <td><%= user.time_zone %></td>
+    <td><%= user.locale %></td>
   </tr>
 <% end %>
 </table>
-
-<br />
-
-<%= link_to 'New User', new_user_path %>
