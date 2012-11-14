@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   respond_to :html, :xml, :json
   self.responder = MyResponder
 
-  before_filter :set_locale, :set_time_zone
+  before_filter :set_locale, :set_time_zone, :check_suspended
 
   rescue_from CanCan::AccessDenied do |exception|
     render :text => exception.message, :status => 403
@@ -46,5 +46,13 @@ class ApplicationController < ActionController::Base
     user_signed_in? or return true
     Time.zone = current_user.time_zone
     true
+  end
+
+  def check_suspended
+    controller_name == 'sessions' and return true
+    user_signed_in? or return true
+    current_user.suspended? or return true
+    redirect_to destroy_user_session_path
+    false
   end
 end

@@ -32,8 +32,7 @@ class User < ActiveRecord::Base
   class << self
     def find_for_google_oauth2(auth, signed_in_resource=nil)
       !auth || !auth.uid and return nil
-      u = find_by_account(auth.uid) || new(:account => auth.uid)
-
+      u = find_or_create_by_account(auth.uid)
       c = auth["credentials"]
       u.update_attributes!({
         :auth_token       => c.token,
@@ -41,6 +40,7 @@ class User < ActiveRecord::Base
         :token_expires_at => Time.at(c.expires_at).to_datetime,
         :token_issued_at  => DateTime.now,
         :notify_email     => auth["info"]["email"],
+        :suspended        => false
       })
       u.save!
       u
@@ -119,7 +119,12 @@ class User < ActiveRecord::Base
     auth = @gapi_client.authorization
     auth.expired? or return
     logger.debug "[User #{account}] Google API: access token has been expired, trying refresh..."
-    auth.fetch_access_token!
+    begin
+      auth.fetch_access_token!
+    rescue Signet::AuthorizationError => e
+      update_attribute :suspended, true
+      raise e
+    end
     self.update_attributes!({
                               :token_expires_at => auth.expires_at,
                               :token_issued_at  => auth.issued_at,
@@ -162,7 +167,12 @@ class User < ActiveRecord::Base
     greq_orig = greq.dup
     logger.debug "[User #{account}] Execute Google API request #{greq[:api_method].id}"
     result = client.execute(greq)
-    if result.status < 200 || result.status >= 300
+    if result.status == 401
+      update_attribute :token_expires_at, Time.at(0)
+      update_attribute :token_issued_at,  Time.at(0)
+      update_gapi_client_token
+      return gapi_request method, params, body
+    elsif result.status < 200 || result.status >= 300
       msg = "Error on Google calendar API '#{method}': status=#{result.status}, request=#{greq_orig.inspect} response=#{result.body}"
       logger.error "[User #{account}] #{msg}"
       #logger.error "[User #{account}] #{result.pretty_inspect}"
