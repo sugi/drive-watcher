@@ -15,14 +15,14 @@ en:
         starred: Starred
   welcome:
     index:
-      description: "Google Drive Notifier check your Google Drive and send notification mail when documents updated."
-      motive: "I hope Google Drive have this function, but not yet. I started to make this function by personal requirement, but I implement as a web service to share with everyone. Use this web app freely if you interest."
+      description: "Google Drive Notifier check your Google Drive and send you a notice via mail when documents are updated."
+      motive: "I wish if Google Drive had this function, but not yet. I started to make this function for my personal needs but I decide to implement this as a web service to share with others. Feel free to use this web app if you are interested in."
       features: Features
       feature_1: "Notify via email for document updates."
       feature_2: "Configurable check target (Activity, All, Own, Starred)."
       feature_3: "Configurable check interval."
-      feature_4: "...just all!"
-      sign_in_with_google: 'Sign in with Google'
+      feature_4: "That's it!"
+      sign_in_with_google: 'Sign in with Google acount'
   users:
     show:
       check_target_descriptions:
@@ -30,18 +30,18 @@ en:
         all: "Check all files you own and shared with you."
         own: ""
         starred: ""
-      target_notice: "Note: In any case, all files will be ignored they has been modified over a week ago."
+      target_notice: "Note: In any case, all files modified more than a week ago will be ignored."
       hours: Hours
       settings: Settings
       info: Info
       manage: Manage
-      reset_stamp_button: 'Reset check timestamp'
-      reset_stamp_confirm: "Are your sure reset timestamp?"
-      reset_stamp_desc: "By resetting timestamp, you will get a notification for all unread files modified within a week. (Debug purpose)"
+      reset_stamp_button: 'Reset previous timestamp'
+      reset_stamp_confirm: "Are your sure you wish to reset your previous timestamp?"
+      reset_stamp_desc: "By resetting the timestamp, you will have notifications for all unread files modified within a week. (Debug purpose)"
       check_now_button: 'Check Now'
       check_now_desc: "Check and send notification immediately. (Debug purpose)"
       delete_button: 'Delete your account'
-      delete_confirm: 'Are your sure to delete your account on Google Drive Notifier?'
+      delete_confirm: 'Are your sure you wish to delete your account on Google Drive Notifier?'
       delete_desc: "You can delete your account information on Google Drive Notifier. All settings will lost, and notification will stop completely."
   user_mailer:
     notify_unread:
