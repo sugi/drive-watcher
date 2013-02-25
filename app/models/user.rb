@@ -31,8 +31,8 @@ class User < ActiveRecord::Base
 
   class << self
     def find_for_google_oauth2(auth, signed_in_resource=nil)
-      !auth || !auth.uid and return nil
-      u = find_or_create_by_account(auth.uid)
+      !auth || !auth.email and return nil
+      u = find_or_create_by_account(auth.email)
       c = auth["credentials"]
       u.update_attributes!({
         :auth_token       => c.token,
